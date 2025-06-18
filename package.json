@@ -1,0 +1,25 @@
+{
+  "name": "our-first-module",
+  "version": "1.0.0",
+  "main": "StorageApi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranfridman/Our-First-Module.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranfridman/Our-First-Module/issues"
+  },
+  "homepage": "https://github.com/ranfridman/Our-First-Module#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "lodash": "^4.17.21",
+    "uuid": "^11.1.0"
+  }
+}

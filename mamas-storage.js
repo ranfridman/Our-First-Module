@@ -1,74 +1,79 @@
-import uuid from "uuid";
+import { v4 } from "uuid";
 
-class InMemeoryStorage {
+
+export class InMemoryStorage {
   constructor() {
-    self.storage = {};
+    this.storage = {};
   }
   create(collectionName, item) {
-    if (!self.storage[collectionName]) {
-      self.storage[collectionName] = [];
+    if (!this.storage[collectionName]) {
+      this.storage[collectionName] = [];
     }
+    
     const newUser = {
-      id: uuid.v4(),
+      id: v4(),
       ...item,
     };
-    self.storage[collectionName].push(newUser);
+    this.storage[collectionName].push(newUser);
     return newUser;
   }
 
   find(collectionName, findFunc) {
-    if (!self.storage[collectionName]) {
+    if (!this.storage[collectionName]) {
       return [];
     }
-    return self.storage[collectionName].filter(findFunc);
+    return this.storage[collectionName].filter(findFunc);
   }
+
   where(collectionName, where) {
-    if (!self.storage[collectionName]) {
+    if (!this.storage[collectionName]) {
       return [];
     }
+    console.log(this.storage[collectionName]);
+    console.log(where);
+    
     return this.find(collectionName, (item) => {
-      return Object.keys(where).every((key) => item[key] === where[key]);
+      return Object.keys(where).every((key) => item[key] == where[key]);
     });
   }
 
   remove(collectionName, findFunc) {
-    if (!self.storage[collectionName]) {
+    if (!this.storage[collectionName]) {
       return [];
     }
     const items = this.find(collectionName, findFunc);
-    self.storage[collectionName] = self.storage[collectionName].filter(
+    this.storage[collectionName] = this.storage[collectionName].filter(
       (item) => !items.includes(item)
     );
     return items;
   }
 }
 
-export class InMemeorySharedStorage {
+export class InMemorySharedStorage {
   static storage = {};
   constructor() {
-    self.storage = InMemeorySharedStorage.storage;
-    
+    this.storage = InMemorySharedStorage.storage;
   }
   create(collectionName, item) {
-    if (!self.storage[collectionName]) {
-      self.storage[collectionName] = [];
+    if (!this.storage[collectionName]) {
+      this.storage[collectionName] = [];
     }
     const newUser = {
-      id: uuid.v4(),
+      id: v4(),
       ...item,
     };
-    self.storage[collectionName].push(newUser);
+    this.storage[collectionName].push(newUser);
     return newUser;
   }
 
   find(collectionName, findFunc) {
-    if (!self.storage[collectionName]) {
+    if (!this.storage[collectionName]) {
       return [];
     }
-    return self.storage[collectionName].filter(findFunc);
+    return this.storage[collectionName].filter(findFunc);
   }
   where(collectionName, where) {
-    if (!self.storage[collectionName]) {
+    if (!this.storage[collectionName]) {
       return [];
     }
     return this.find(collectionName, (item) => {
@@ -77,15 +82,14 @@ export class InMemeorySharedStorage {
   }
 
   remove(collectionName, findFunc) {
-    if (!self.storage[collectionName]) {
+    if (!this.storage[collectionName]) {
       return [];
     }
     const items = this.find(collectionName, findFunc);
-    self.storage[collectionName] = self.storage[collectionName].filter(
+    this.storage[collectionName] = this.storage[collectionName].filter(
       (item) => !items.includes(item)
     );
     return items;
   }
 }
 
-module.exports = { InMemoryStorage, InMemorySharedStorage };  
